@@ -42,13 +42,13 @@ public class HttpClientAntilles {
 		try {
 			//utilisation du proxy
 			DefaultHttpClient httpclient = new DefaultHttpClient();			
-			//définition du login/mdp du proxy
+			//dï¿½finition du login/mdp du proxy
 			CredentialsProvider credsProvider = new BasicCredentialsProvider();
 	        credsProvider.setCredentials(
 	                new AuthScope(proxyUrl, proxyPort),
 	                new UsernamePasswordCredentials(proxyUser, proxyPass));	        
 	        httpclient.setCredentialsProvider(credsProvider);	        
-	        //exécution de la requête
+	        //exï¿½cution de la requï¿½te
 			HttpResponse httpResponse = httpclient.execute(request);
 			return httpResponse;
 		} catch (IOException e) {
@@ -63,7 +63,7 @@ public class HttpClientAntilles {
 	}
 	
 	/**
-	 * Parsing de la réponse xml
+	 * Parsing de la rï¿½ponse xml
 	 * @param in
 	 * @param responseParser
 	 * @throws IOException
@@ -110,12 +110,12 @@ public class HttpClientAntilles {
 	public HttpURLConnection getUrlConnection(String url) throws IOException {
 		URL urlConnection;		
 		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
-				"web.pandore.log.intra.laposte.fr", 8080));
+				"", 8080));
 		Authenticator authenticator = new Authenticator() {
 
 			public PasswordAuthentication getPasswordAuthentication() {
-				return (new PasswordAuthentication("pfwn061",
-						"fwn061".toCharArray()));
+				return (new PasswordAuthentication("",
+						"".toCharArray()));
 			}
 		};
 		Authenticator.setDefault(authenticator);
