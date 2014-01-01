@@ -5,16 +5,16 @@ import org.simpleframework.xml.Root;
 
 @Root(strict=false)
 public class Item {
-	@Element
+	@Element(required=false)
 	private String category;
 
-	@Element
+	@Element(required=false)
 	private String link;
 
-	@Element
+	@Element(required=false)
 	private String title;
 
-	@Element
+	@Element(required=false)
 	private String description;
 
 	public String getCategory() {

@@ -2,7 +2,11 @@ package fr.info.antillesinfov2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +21,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import fr.info.antillesinfov2.dao.DaoNews;
+import fr.info.antillesinfov2.model.Item;
+import fr.info.antillesinfov2.model.RSS;
 
 public class MainActivity extends Activity {
 
@@ -32,10 +38,11 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Tache permettant de récupérer les infos via un flux 
-	 * et de compléter le layout
+	 * Tache permettant de rï¿½cupï¿½rer les infos via un flux et de complï¿½ter le
+	 * layout
+	 * 
 	 * @author NEBLAI
-	 *
+	 * 
 	 */
 	private class HttpRequestTask extends AsyncTask<String, Integer, String> {
 		private DaoNews daoNews;
@@ -43,85 +50,114 @@ public class MainActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			daoNews = new DaoNews();
-			String data = daoNews.readContentsOfUrl(params[0]);
-			return data;
+			String rssSource = daoNews.readContentsOfUrl(params[0]);
+			return rssSource;
 		}
 
-		protected void onPostExecute(String result) {
-			System.out.println(result);
+		protected void onPostExecute(String rssSource) {
+			RSS rssObject = null;
+			try {
+				Serializer serializer = new Persister();
+				rssObject = serializer.read(RSS.class, rssSource);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// return example.getChannel().getItem();*/
+			List<Item> arrayListItem = rssObject.getChannel().getItem();
+
 			// showDialog("Downloaded " + result + " bytes");
-			// On récupère une ListView de notre layout en XML, c'est la vue qui
-			// représente la liste
+			// On rï¿½cupï¿½re une ListView de notre layout en XML, c'est la vue qui
+			// reprï¿½sente la liste
 			vue = (ListView) findViewById(R.id.listView1);
 
 			/*
-			 * On entrepose nos données dans un tableau qui contient deux
-			 * colonnes : - la première contiendra le nom de l'utilisateur - la
-			 * seconde contiendra le numéro de téléphone de l'utilisateur
+			 * On entrepose nos donnï¿½es dans un tableau qui contient deux
+			 * colonnes : - la premiï¿½re contiendra le nom de l'utilisateur - la
+			 * seconde contiendra le numï¿½ro de tï¿½lï¿½phone de l'utilisateur
 			 */
 			String[][] repertoire = new String[][] {
 					{ "Bill Gates", "06 06 06 06 06" },
 					{ "Niels Bohr", "05 05 05 05 05" },
-					{ "Alexandre III de Macédoine", "04 04 04 04 04" } };
+					{ "Alexandre III de Macï¿½doine", "04 04 04 04 04" } };
 
 			/*
-			 * On doit donner à notre adaptateur une liste du type «
-			 * List<Map<String, ?> » : - la clé doit forcément être une chaîne
-			 * de caractères - en revanche, la valeur peut être n'importe quoi,
+			 * On doit donner ï¿½ notre adaptateur une liste du type ï¿½
+			 * List<Map<String, ?> ï¿½ : - la clï¿½ doit forcï¿½ment ï¿½tre une chaï¿½ne
+			 * de caractï¿½res - en revanche, la valeur peut ï¿½tre n'importe quoi,
 			 * un objet ou un entier par exemple, si c'est un objet, on
-			 * affichera son contenu avec la méthode « toString() »
+			 * affichera son contenu avec la mï¿½thode ï¿½ toString() ï¿½
 			 * 
-			 * Dans notre cas, la valeur sera une chaîne de caractères, puisque
-			 * le nom et le numéro de téléphone sont entreposés dans des chaînes
-			 * de caractères
+			 * Dans notre cas, la valeur sera une chaï¿½ne de caractï¿½res, puisque
+			 * le nom et le numï¿½ro de tï¿½lï¿½phone sont entreposï¿½s dans des chaï¿½nes
+			 * de caractï¿½res
 			 */
 			List<HashMap<String, String>> liste = new ArrayList<HashMap<String, String>>();
 
 			HashMap<String, String> element;
-			// Pour chaque personne dans notre répertoire…
-			for (int i = 0; i < repertoire.length; i++) {
-				// … on crée un élément pour la liste…
+			for (Iterator<Item> iterator = arrayListItem.iterator(); iterator
+					.hasNext();) {
+				Item item = (Item) iterator.next();
+				System.out.println(item.getDescription());
+				// ï¿½ on crï¿½e un ï¿½lï¿½ment pour la listeï¿½
 				element = new HashMap<String, String>();
 				/*
-				 * … on déclare que la clé est « text1 » (j'ai choisi ce mot au
+				 * ï¿½ on dï¿½clare que la clï¿½ est ï¿½ text1 ï¿½ (j'ai choisi ce mot au
 				 * hasard, sans sens technique particulier) pour le nom de la
-				 * personne (première dimension du tableau de valeurs)…
+				 * personne (premiï¿½re dimension du tableau de valeurs)ï¿½
 				 */
-				element.put("text1", repertoire[i][0]);
+				element.put("text1", item.getTitle());
 				/*
-				 * … on déclare que la clé est « text2 » pour le numéro de cette
+				 * ï¿½ on dï¿½clare que la clï¿½ est ï¿½ text2 ï¿½ pour le numï¿½ro de cette
 				 * personne (seconde dimension du tableau de valeurs)
 				 */
-				element.put("text2", repertoire[i][1]);
+				element.put("text2", item.getCategory());
 				liste.add(element);
 			}
+			// // Pour chaque personne dans notre rï¿½pertoireï¿½
+			// for (int i = 0; i < repertoire.length; i++) {
+			// // ï¿½ on crï¿½e un ï¿½lï¿½ment pour la listeï¿½
+			// element = new HashMap<String, String>();
+			// /*
+			// * ï¿½ on dï¿½clare que la clï¿½ est ï¿½ text1 ï¿½ (j'ai choisi ce mot au
+			// * hasard, sans sens technique particulier) pour le nom de la
+			// * personne (premiï¿½re dimension du tableau de valeurs)ï¿½
+			// */
+			// element.put("text1", repertoire[i][0]);
+			// /*
+			// * ï¿½ on dï¿½clare que la clï¿½ est ï¿½ text2 ï¿½ pour le numï¿½ro de cette
+			// * personne (seconde dimension du tableau de valeurs)
+			// */
+			// element.put("text2", repertoire[i][1]);
+			// liste.add(element);
+			// }
 
 			ListAdapter adapter = new SimpleAdapter(getApplicationContext(),
-			// Valeurs à insérer
+			// Valeurs ï¿½ insï¿½rer
 					liste,
 					/*
-					 * Layout de chaque élément (là, il s'agit d'un layout par
-					 * défaut pour avoir deux textes l'un au-dessus de l'autre,
-					 * c'est pourquoi on n'affiche que le nom et le numéro d'une
+					 * Layout de chaque ï¿½lï¿½ment (lï¿½, il s'agit d'un layout par
+					 * dï¿½faut pour avoir deux textes l'un au-dessus de l'autre,
+					 * c'est pourquoi on n'affiche que le nom et le numï¿½ro d'une
 					 * personne)
 					 */
-					android.R.layout.simple_expandable_list_item_2,
+					android.R.layout.simple_expandable_list_item_1,
 					/*
-					 * Les clés des informations à afficher pour chaque élément
-					 * : - la valeur associée à la clé « text1 » sera la
-					 * première information - la valeur associée à la clé «
-					 * text2 » sera la seconde information
+					 * Les clï¿½s des informations ï¿½ afficher pour chaque ï¿½lï¿½ment
+					 * : - la valeur associï¿½e ï¿½ la clï¿½ ï¿½ text1 ï¿½ sera la
+					 * premiï¿½re information - la valeur associï¿½e ï¿½ la clï¿½ ï¿½
+					 * text2 ï¿½ sera la seconde information
 					 */
 					new String[] { "text1", "text2" },
 					/*
-					 * Enfin, les layouts à appliquer à chaque widget de notre
-					 * élément (ce sont des layouts fournis par défaut) : - la
-					 * première information appliquera le layout «
-					 * android.R.id.text1 » - la seconde information appliquera
-					 * le layout « android.R.id.text2 »
+					 * Enfin, les layouts ï¿½ appliquer ï¿½ chaque widget de notre
+					 * ï¿½lï¿½ment (ce sont des layouts fournis par dï¿½faut) : - la
+					 * premiï¿½re information appliquera le layout ï¿½
+					 * android.R.id.text1 ï¿½ - la seconde information appliquera
+					 * le layout ï¿½ android.R.id.text2 ï¿½
 					 */
 					new int[] { android.R.id.text1, android.R.id.text2 });
-			// Pour finir, on donne à la ListView le SimpleAdapter
+			// Pour finir, on donne ï¿½ la ListView le SimpleAdapter
 			vue.setAdapter(adapter);
 			vue.setOnItemClickListener(new OnItemClickListener() {
 				@Override

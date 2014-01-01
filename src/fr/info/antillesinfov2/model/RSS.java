@@ -1,20 +1,20 @@
 package fr.info.antillesinfov2.model;
 
-import java.util.List;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(strict=false)
+@Root(strict = false)
 public class RSS {
-	@Element
-	private List<Item> channel;
+	
+	@Element(name="channel")
+	private Channel channel;
 
-	public List<Item> getChannel() {
+	public Channel getChannel() {
 		return channel;
 	}
 
-	public void setChannel(List<Item> channel) {
+	public void setChannel(Channel channel) {
 		this.channel = channel;
 	}
+
 }

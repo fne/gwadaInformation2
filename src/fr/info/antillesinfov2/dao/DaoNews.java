@@ -7,18 +7,15 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 
 import org.apache.http.HttpResponse;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
 
 import android.util.Log;
 import fr.info.antillesinfov2.library.HttpClientAntilles;
-import fr.info.antillesinfov2.model.RSS;
 
 public class DaoNews {
 	private static final String DEBUG_TAG = "DaoNews";
 	private HttpClientAntilles httpClient;
 	/**
-	 * Lecture des données sur un serveur distant
+	 * Lecture des donnï¿½es sur un serveur distant
 	 * 
 	 * @param url
 	 * @return
@@ -34,29 +31,24 @@ public class DaoNews {
 			Log.d(DEBUG_TAG, "The response is: " + response);
 			//lecture de la requete http
 			InputStream is = httpResponse.getEntity().getContent();
-			/*BufferedReader reader = new BufferedReader(
+			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(is));
 			String line = reader.readLine();
 			result = line;
 			while ((line = reader.readLine()) != null) {
 				result += line;
-			}*/
-			Serializer serializer = new Persister();			
+			}
+			/*Serializer serializer = new Persister();			
 			RSS example = serializer.read(RSS.class, is);
-			example.getChannel();
+			example.getChannel();*/
 			
 		} catch (MalformedURLException e) {			 
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {			
 			e.printStackTrace();
 		}
 		return result;
-	}
-	
-	//public List getNewsList(){
-		
-	//}
+	}	
 }
