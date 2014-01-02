@@ -37,11 +37,7 @@ public class DaoNews {
 			result = line;
 			while ((line = reader.readLine()) != null) {
 				result += line;
-			}
-			/*Serializer serializer = new Persister();			
-			RSS example = serializer.read(RSS.class, is);
-			example.getChannel();*/
-			
+			}			
 		} catch (MalformedURLException e) {			 
 			e.printStackTrace();
 		} catch (IOException e) {

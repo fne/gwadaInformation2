@@ -1,4 +1,4 @@
-package fr.info.antillesinfov2.model;
+package fr.info.antillesinfov2.dao.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

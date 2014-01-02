@@ -1,4 +1,4 @@
-package fr.info.antillesinfov2.model;
+package fr.info.antillesinfov2.dao.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -16,6 +16,17 @@ public class Item {
 
 	@Element(required=false)
 	private String description;
+
+	@Element(required=false)
+	private Enclosure enclosure;
+	
+	public Enclosure getEnclosure() {
+		return enclosure;
+	}
+
+	public void setEnclosure(Enclosure enclosure) {
+		this.enclosure = enclosure;
+	}
 
 	public String getCategory() {
 		return category;

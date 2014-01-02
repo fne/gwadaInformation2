@@ -1,4 +1,4 @@
-package fr.info.antillesinfov2.model;
+package fr.info.antillesinfov2.dao.model;
 
 import java.util.List;
 

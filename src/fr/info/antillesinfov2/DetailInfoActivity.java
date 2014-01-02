@@ -1,5 +1,7 @@
 package fr.info.antillesinfov2;
 
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,26 +10,36 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+import fr.info.antillesinfov2.business.model.News;
 
 public class DetailInfoActivity extends Activity {
+
+	private TextView titreInfo;
+	private TextView descriptionInfo;
+	private ImageView imageInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_detail_info);
+		setContentView(R.layout.activity_detail_info);
 		// Show the Up button in the action bar.
 		// Get the message from the intent
-	    Intent intent = getIntent();
-	    String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+		Intent intent = getIntent();
+		News news = (News) intent
+				.getSerializableExtra(MainActivity.EXTRA_MESSAGE);
 
-	    // Create the text view
-	    TextView textView = new TextView(this);
-	    textView.setTextSize(40);
-	    textView.setText(message);
+		// Create the text view
+		titreInfo = (TextView) findViewById(R.id.text_view_detail_info);
+		descriptionInfo = (TextView) findViewById(R.id.text_view_description_info);
+		imageInfo = (ImageView) findViewById(R.id.img_detail_info);
+		titreInfo.setText(news.getTitle());
+		descriptionInfo.setText(news.getDescription());
+		UrlImageViewHelper.setUrlDrawable(imageInfo, news.getImageUrl());
 
-	    // Set the text view as the activity layout
-	    setContentView(textView);
+		// Set the text view as the activity layout
+		// setContentView(textView);
 		setupActionBar();
 	}
 
