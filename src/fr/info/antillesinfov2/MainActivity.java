@@ -20,7 +20,7 @@ import fr.info.antillesinfov2.business.service.android.NewsAdapter;
 
 public class MainActivity extends Activity {
 
-	public static final String EXTRA_MESSAGE = null;
+	public static final String EXTRA_MESSAGE = "news";
 	private ListView vue;
 	private List<News> listNews;
 
@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 							int arg2, long arg3) {
 						Intent intent = new Intent(getApplicationContext(),
 								DetailInfoActivity.class);												
-						intent.putExtra("news", getListNews().get(arg2));
+						intent.putExtra(MainActivity.EXTRA_MESSAGE, getListNews().get(arg2));
 						startActivity(intent);
 					}
 				});
