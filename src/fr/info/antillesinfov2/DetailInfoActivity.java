@@ -37,9 +37,7 @@ public class DetailInfoActivity extends Activity {
 		titreInfo.setText(news.getTitle());
 		descriptionInfo.setText(news.getDescription());
 		UrlImageViewHelper.setUrlDrawable(imageInfo, news.getImageUrl());
-
-		// Set the text view as the activity layout
-		// setContentView(textView);
+		
 		setupActionBar();
 	}
 

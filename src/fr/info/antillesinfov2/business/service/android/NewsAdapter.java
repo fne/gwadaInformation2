@@ -1,23 +1,19 @@
 package fr.info.antillesinfov2.business.service.android;
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper.RequestPropertiesCallback;
-
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
 import fr.info.antillesinfov2.R;
 import fr.info.antillesinfov2.business.model.News;
-import fr.info.antillesinfov2.business.service.NewsManager;
-import fr.info.antillesinfov2.business.service.NewsManagerImpl;
 
 public class NewsAdapter extends BaseAdapter {
 

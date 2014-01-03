@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,11 +24,13 @@ public class MainActivity extends Activity {
 	public static final String EXTRA_MESSAGE = "news";
 	private ListView vue;
 	private List<News> listNews;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		progressDialog = ProgressDialog.show(this, "", "Chargement", true);
 		HttpRequestTask httpRequestTask = new HttpRequestTask();
 		httpRequestTask.execute("http://www.domactu.com/rss/actu/");
 	}
@@ -65,11 +68,13 @@ public class MainActivity extends Activity {
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						Intent intent = new Intent(getApplicationContext(),
-								DetailInfoActivity.class);												
-						intent.putExtra(MainActivity.EXTRA_MESSAGE, getListNews().get(arg2));
+								DetailInfoActivity.class);
+						intent.putExtra(MainActivity.EXTRA_MESSAGE,
+								getListNews().get(arg2));
 						startActivity(intent);
 					}
 				});
+				progressDialog.dismiss();
 			} catch (IOException e) {
 				Log.i("mainActivity", "network exception");
 				e.printStackTrace();
@@ -93,6 +98,14 @@ public class MainActivity extends Activity {
 
 	public void setListNews(List<News> listNews) {
 		this.listNews = listNews;
+	}
+
+	public ProgressDialog getProgressDialog() {
+		return progressDialog;
+	}
+
+	public void setProgressDialog(ProgressDialog progressDialog) {
+		this.progressDialog = progressDialog;
 	}
 
 }

@@ -6,10 +6,13 @@
 
     <TextView
         android:id="@+id/text_view_detail_info"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-         />
-    
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <ImageView
         android:id="@+id/img_detail_info"
         android:layout_width="250dp"
@@ -17,11 +20,12 @@
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/title_activity_detail_info"
         android:padding="10dp" />
-    
+
     <TextView
         android:id="@+id/text_view_description_info"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-         />
+        android:padding="10dp"
+        android:textSize="15sp" />
 
 </LinearLayout>
