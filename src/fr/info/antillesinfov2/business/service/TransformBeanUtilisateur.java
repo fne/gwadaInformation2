@@ -25,6 +25,7 @@ public class TransformBeanUtilisateur {
 				news.setImageUrl(item.getEnclosure().getUrl());
 			}
 			news.setTitle(item.getTitle());
+			news.setLink(item.getLink());
 			return news;
 		}
 		return null;

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">antillesInfoV2</string>
+    <string name="app_name">DOMactu [unofficial]</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_detail_info">DetailInfoActivity</string>
-
+    <string name="title_activity_detail_info">DOMactu [unofficial]</string>
+    <string name="title_activity_web_view">DOMactu [unofficial]</string>
+    <string name="action_rss_mq">Actualité Martinique - uniquement</string>
+    <string name="action_rss_gp">Actualité Guadeloupe - uniquement</string>
 </resources>

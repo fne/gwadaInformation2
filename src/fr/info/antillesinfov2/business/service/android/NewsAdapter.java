@@ -77,7 +77,7 @@ public class NewsAdapter extends BaseAdapter {
 		holder.titre.setText(newsItem.getTitle());
 		holder.category.setText(newsItem.getCategory());
 
-		if (holder.image != null) {			
+		if (holder.image != null && newsItem.getImageUrl()!= null) {			
 			UrlImageViewHelper.setUrlDrawable(holder.image,
 					newsItem.getImageUrl());
 		}

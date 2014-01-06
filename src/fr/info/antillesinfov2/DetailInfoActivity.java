@@ -1,7 +1,5 @@
 package fr.info.antillesinfov2;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,15 +8,26 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
+
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
 import fr.info.antillesinfov2.business.model.News;
 
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class DetailInfoActivity extends Activity {
 
 	private TextView titreInfo;
 	private TextView descriptionInfo;
+
 	private ImageView imageInfo;
+	private News myNews;
+	private Button button;
+	public static final String URL_LINK = "http://www.google.com";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +36,37 @@ public class DetailInfoActivity extends Activity {
 		// Show the Up button in the action bar.
 		// Get the message from the intent
 		Intent intent = getIntent();
-		News news = (News) intent
-				.getSerializableExtra(MainActivity.EXTRA_MESSAGE);
+		myNews = (News) intent.getSerializableExtra(MainActivity.EXTRA_MESSAGE);
 
 		// Create the text view
 		titreInfo = (TextView) findViewById(R.id.text_view_detail_info);
 		descriptionInfo = (TextView) findViewById(R.id.text_view_description_info);
 		imageInfo = (ImageView) findViewById(R.id.img_detail_info);
-		titreInfo.setText(news.getTitle());
-		descriptionInfo.setText(news.getDescription());
-		UrlImageViewHelper.setUrlDrawable(imageInfo, news.getImageUrl());
+		titreInfo.setText(myNews.getTitle());
+		descriptionInfo.setText(myNews.getDescription());
+		if (myNews.getImageUrl() != null)
+			UrlImageViewHelper.setUrlDrawable(imageInfo, myNews.getImageUrl());
 
 		// Set the text view as the activity layout
 		// setContentView(textView);
 		setupActionBar();
+
+		
+	}
+
+	public void onClick(View arg0) {
+		/*
+		 * Context context = getApplicationContext(); CharSequence text =
+		 * myNews.getLink(); int duration = Toast.LENGTH_SHORT;
+		 * 
+		 * Toast toast = Toast.makeText(context, text, duration); toast.show();
+		 */
+
+		Intent intent = new Intent(getApplicationContext(),
+				WebViewActivity.class);
+		intent.putExtra(DetailInfoActivity.URL_LINK, myNews.getLink());
+		intent.putExtra(MainActivity.EXTRA_MESSAGE,myNews);		
+		startActivity(intent);
 	}
 
 	/**
@@ -57,6 +83,15 @@ public class DetailInfoActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.detail_info, menu);
+
+		MenuItem item = menu.findItem(R.id.menu_item_share);
+		ShareActionProvider myShareActionProvider = (ShareActionProvider) item.getActionProvider();
+		Intent myIntent = new Intent();
+		myIntent.setAction(Intent.ACTION_SEND);
+		myIntent.putExtra(Intent.EXTRA_TEXT,myNews.getLink());
+		myIntent.setType("text/plain");
+		myShareActionProvider.setShareIntent(myIntent);
+
 		return true;
 	}
 
@@ -71,7 +106,8 @@ public class DetailInfoActivity extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			//NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
