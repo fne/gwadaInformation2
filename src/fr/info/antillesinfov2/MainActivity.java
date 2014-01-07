@@ -54,12 +54,9 @@ public class MainActivity extends Activity {
 				.getSerializableExtra(MainActivity.RSS_TO_OPEN);
 
 		httpRequestTask = new HttpRequestTask();
-		if (myChoosenRss == null) 
-		{
+		if (myChoosenRss == null) {
 			httpRequestTask.execute(DEFAULT_RSS);
-		}
-		else 
-		{
+		} else {
 			httpRequestTask.execute(myChoosenRss);
 		}
 		mProgressDialog
@@ -143,9 +140,6 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		//
-		//
-		menu.getItem(2).setEnabled(false);
 		return true;
 	}
 
@@ -160,6 +154,10 @@ public class MainActivity extends Activity {
 			return true;
 		case R.id.action_rss_mq:
 			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.MQ_RSS);
+			startActivity(intent);
+			return true;
+		case R.id.action_rss_all:
+			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.DEFAULT_RSS);
 			startActivity(intent);
 			return true;
 		default:

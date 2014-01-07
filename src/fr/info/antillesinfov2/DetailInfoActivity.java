@@ -47,20 +47,13 @@ public class DetailInfoActivity extends Activity {
 		if (myNews.getImageUrl() != null)
 			UrlImageViewHelper.setUrlDrawable(imageInfo, myNews.getImageUrl());
 
-		// Set the text view as the activity layout
-		// setContentView(textView);
+		// Prise en charge de l action bar
 		setupActionBar();
 
 	}
 
-	public void onClick(View arg0) {
-		/*
-		 * Context context = getApplicationContext(); CharSequence text =
-		 * myNews.getLink(); int duration = Toast.LENGTH_SHORT;
-		 * 
-		 * Toast toast = Toast.makeText(context, text, duration); toast.show();
-		 */
-
+	public void onClick(View arg0) {	
+		//Création de la webview
 		Intent intent = new Intent(getApplicationContext(),
 				WebViewActivity.class);
 		intent.putExtra(DetailInfoActivity.URL_LINK, myNews.getLink());
