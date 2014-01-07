@@ -27,13 +27,13 @@ public class MainActivity extends Activity {
 	public static final String EXTRA_MESSAGE = "news";
 	public static final String DEFAULT_RSS = "http://www.domactu.com/rss/actu/";
 	public static final String GP_RSS = "http://www.domactu.com/rss/actu/guadeloupe/";
-	public static final String MQ_RSS = "http://www.domactu.com/rss/actu/martinique/";	
-	public static String RSS_TO_OPEN;	
+	public static final String MQ_RSS = "http://www.domactu.com/rss/actu/martinique/";
+	public static String RSS_TO_OPEN;
 	private ListView vue;
 	private List<News> listNews;
 	// declare the dialog as a member field of your activity
-	ProgressDialog mProgressDialog;
-	HttpRequestTask httpRequestTask;
+	private ProgressDialog mProgressDialog;
+	private HttpRequestTask httpRequestTask;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +46,22 @@ public class MainActivity extends Activity {
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mProgressDialog.setCancelable(true);
 
-		
 		// Show the Up button in the action bar.
 		// Get the message from the intent
 		Intent intent = getIntent();
-		//TODO : A mettre dans les paramètres de l'appli
-		String myChoosenRss = (String) intent.getSerializableExtra(MainActivity.RSS_TO_OPEN);		
-		
-		httpRequestTask = new HttpRequestTask();
-		if (myChoosenRss==null)
-		httpRequestTask.execute(DEFAULT_RSS);
-		else
-			httpRequestTask.execute(myChoosenRss);
+		// TODO : A mettre dans les paramètres de l'appli
+		String myChoosenRss = (String) intent
+				.getSerializableExtra(MainActivity.RSS_TO_OPEN);
 
+		httpRequestTask = new HttpRequestTask();
+		if (myChoosenRss == null) 
+		{
+			httpRequestTask.execute(DEFAULT_RSS);
+		}
+		else 
+		{
+			httpRequestTask.execute(myChoosenRss);
+		}
 		mProgressDialog
 				.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
@@ -142,31 +145,28 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		//
 		//
-		 menu.getItem(2).setEnabled(false);
+		menu.getItem(2).setEnabled(false);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent(getApplicationContext(),	MainActivity.class);
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.action_rss_gp:
-				intent.putExtra(MainActivity.RSS_TO_OPEN,
-						this.GP_RSS);
-				startActivity(intent);	            
-	            return true;
-	        case R.id.action_rss_mq:
-				intent.putExtra(MainActivity.RSS_TO_OPEN,
-						this.MQ_RSS);
-				startActivity(intent);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-	}	
-	
-	
+		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.action_rss_gp:
+			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.GP_RSS);
+			startActivity(intent);
+			return true;
+		case R.id.action_rss_mq:
+			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.MQ_RSS);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	public List<News> getListNews() {
 		return listNews;
 	}

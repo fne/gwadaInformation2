@@ -16,16 +16,20 @@ public class TransformBeanUtilisateur {
 	 */
 	private static News transformItemToNews(Item item) {
 		News news = new News();
-		if (item != null) 
-		{
+		if (item != null) {
 			news.setCategory(item.getCategory());
 			news.setDescription(item.getDescription());
-			if(item.getEnclosure()!=null)
-			{
+			if (item.getEnclosure() != null) {
 				news.setImageUrl(item.getEnclosure().getUrl());
 			}
 			news.setTitle(item.getTitle());
-			news.setLink(item.getLink());
+			// recuperation de la vue mobile
+			String mobileLink = item.getLink();
+			// utilisation de string utils plus tard
+			if (mobileLink != null && mobileLink != "") {
+				mobileLink = mobileLink.replace("www", "m");
+			}
+			news.setLink(mobileLink);
 			return news;
 		}
 		return null;
@@ -41,9 +45,8 @@ public class TransformBeanUtilisateur {
 		List<News> listNews = new ArrayList<News>();
 		for (Item item : listItem) {
 			News news = transformItemToNews(item);
-			if(news != null)
-			{
-				listNews.add(news);				
+			if (news != null) {
+				listNews.add(news);
 			}
 		}
 		return listNews;

@@ -51,7 +51,6 @@ public class DetailInfoActivity extends Activity {
 		// setContentView(textView);
 		setupActionBar();
 
-		
 	}
 
 	public void onClick(View arg0) {
@@ -65,7 +64,7 @@ public class DetailInfoActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(),
 				WebViewActivity.class);
 		intent.putExtra(DetailInfoActivity.URL_LINK, myNews.getLink());
-		intent.putExtra(MainActivity.EXTRA_MESSAGE,myNews);		
+		intent.putExtra(MainActivity.EXTRA_MESSAGE, myNews);
 		startActivity(intent);
 	}
 
@@ -85,10 +84,11 @@ public class DetailInfoActivity extends Activity {
 		getMenuInflater().inflate(R.menu.detail_info, menu);
 
 		MenuItem item = menu.findItem(R.id.menu_item_share);
-		ShareActionProvider myShareActionProvider = (ShareActionProvider) item.getActionProvider();
+		ShareActionProvider myShareActionProvider = (ShareActionProvider) item
+				.getActionProvider();
 		Intent myIntent = new Intent();
 		myIntent.setAction(Intent.ACTION_SEND);
-		myIntent.putExtra(Intent.EXTRA_TEXT,myNews.getLink());
+		myIntent.putExtra(Intent.EXTRA_TEXT, myNews.getLink());
 		myIntent.setType("text/plain");
 		myShareActionProvider.setShareIntent(myIntent);
 
@@ -106,7 +106,7 @@ public class DetailInfoActivity extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			//NavUtils.navigateUpFromSameTask(this);
+			// NavUtils.navigateUpFromSameTask(this);
 			finish();
 			return true;
 		}
