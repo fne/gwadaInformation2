@@ -1,4 +1,4 @@
-package fr.info.antillesinfov2;
+package fr.info.antillesinfov2.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -11,6 +11,7 @@ import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import fr.info.antillesinfov2.R;
 
 public class WebViewActivity extends Activity {
 

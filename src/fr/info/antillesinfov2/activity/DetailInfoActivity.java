@@ -1,21 +1,20 @@
-package fr.info.antillesinfov2;
+package fr.info.antillesinfov2.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
+import fr.info.antillesinfov2.R;
 import fr.info.antillesinfov2.business.model.News;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -26,7 +25,7 @@ public class DetailInfoActivity extends Activity {
 
 	private ImageView imageInfo;
 	private News myNews;
-	private Button button;
+	
 	public static final String URL_LINK = "http://www.google.com";
 
 	@Override

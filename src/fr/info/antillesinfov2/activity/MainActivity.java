@@ -1,4 +1,4 @@
-package fr.info.antillesinfov2;
+package fr.info.antillesinfov2.activity;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+import fr.info.antillesinfov2.R;
 import fr.info.antillesinfov2.business.model.News;
 import fr.info.antillesinfov2.business.service.NewsManager;
 import fr.info.antillesinfov2.business.service.NewsManagerImpl;
