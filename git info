@@ -1,0 +1,28 @@
+[33mcommit c9eb8c14399244ee5051eb7405c447d37dd0f168[m
+Author: fne <NEBLAI@XP1894.dsi.enseigne.intra.laposte.fr>
+Date:   Fri Jan 10 17:00:46 2014 +0100
+
+    modification du parent view
+
+[1mdiff --git a/AndroidManifest.xml b/AndroidManifest.xml[m
+[1mindex 23eefb1..0d2eeac 100644[m
+[1m--- a/AndroidManifest.xml[m
+[1m+++ b/AndroidManifest.xml[m
+[36m@@ -27,7 +27,7 @@[m
+             android:parentActivityName="fr.info.antillesinfov2.activity.MainActivity" >[m
+             <meta-data[m
+                 android:name="android.support.PARENT_ACTIVITY"[m
+[31m-                android:value="fr.info.antillesinfov2.MainActivity" />[m
+[32m+[m[32m                android:value="fr.info.antillesinfov2.MainTabActivity" />[m
+         </activity>[m
+         <activity[m
+             android:name="fr.info.antillesinfov2.activity.WebViewActivity"[m
+[36m@@ -38,7 +38,7 @@[m
+         </activity>[m
+         <activity[m
+             android:name="fr.info.antillesinfov2.activity.MainTabActivity"[m
+[31m-            android:label="@string/title_activity_main_tab" >[m
+[32m+[m[32m            android:label="@string/app_name" >[m
+             <intent-filter>[m
+                 <action android:name="android.intent.action.MAIN" />[m
+ [m

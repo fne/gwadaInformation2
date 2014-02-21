@@ -3,12 +3,12 @@ package fr.info.antillesinfov2.activity;
 import java.io.IOException;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,8 +22,9 @@ import fr.info.antillesinfov2.business.model.News;
 import fr.info.antillesinfov2.business.service.NewsManager;
 import fr.info.antillesinfov2.business.service.NewsManagerImpl;
 import fr.info.antillesinfov2.business.service.android.NewsAdapter;
+import fr.info.antillesinfov2.fragment.impl.GuadeloupeSectionFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	public static final String EXTRA_MESSAGE = "news";
 	public static final String DEFAULT_RSS = "http://www.domactu.com/rss/actu/";
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
 	private List<News> listNews;
 	// declare the dialog as a member field of your activity
 	private ProgressDialog mProgressDialog;
-	private HttpRequestTask httpRequestTask;
+	//private HttpRequestTask httpRequestTask;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,132 +47,36 @@ public class MainActivity extends Activity {
 		mProgressDialog.setIndeterminate(true);
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		mProgressDialog.setCancelable(true);
-
-		// Show the Up button in the action bar.
-		// Get the message from the intent
-		Intent intent = getIntent();
-		// TODO : A mettre dans les paramètres de l'appli
-		String myChoosenRss = (String) intent
-				.getSerializableExtra(MainActivity.RSS_TO_OPEN);
-
-		httpRequestTask = new HttpRequestTask();
-		if (myChoosenRss == null) {
-			httpRequestTask.execute(DEFAULT_RSS);
-		} else {
-			httpRequestTask.execute(myChoosenRss);
-		}
 		mProgressDialog
-				.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						httpRequestTask.cancel(true);
-					}
-				});
-	}
-
-	/**
-	 * Tache permettant de recuperer les infos via un flux et de completer le
-	 * layout
-	 * 
-	 * @author NEBLAI
-	 * 
-	 */
-	private class HttpRequestTask extends AsyncTask<String, Integer, String> {
-		private NewsManager newsManager = new NewsManagerImpl();;
-
-		@Override
-		protected String doInBackground(String... params) {
-			String rssSource = newsManager.getNewsChannel(params[0]);
-			return rssSource;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			mProgressDialog.show();
-		}
-
-		protected void onPostExecute(String rssSource) {
-			String result = null;
-			try {
-				newsManager = new NewsManagerImpl();
-				List<News> arrayListNews = newsManager.getListNews(rssSource);
-				setListNews(arrayListNews);
-				// represente la liste
-				vue = (ListView) findViewById(R.id.listView);
-
-				NewsAdapter adapter = new NewsAdapter(getApplicationContext(),
-						arrayListNews);
-				// Pour finir association du simpleadapter a la vue
-				vue.setAdapter(adapter);
-				vue.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
-						Intent intent = new Intent(getApplicationContext(),
-								DetailInfoActivity.class);
-						intent.putExtra(MainActivity.EXTRA_MESSAGE,
-								getListNews().get(arg2));
-						startActivity(intent);
-					}
-				});
-			} catch (IOException e) {
-				Log.i("mainActivity", "network exception");
-				result = e.getMessage();
-				e.printStackTrace();
-			} catch (Exception e) {
-				Log.i("mainActivity", "no news");
-				result = e.getMessage();
-				e.printStackTrace();
-			} finally {
-				mProgressDialog.dismiss();
-				if (result != null)
-					Toast.makeText(getApplicationContext(),
-							"Download error: " + result, Toast.LENGTH_LONG)
-							.show();
-				else
-					Toast.makeText(getApplicationContext(),
-							"News downloaded !", Toast.LENGTH_SHORT).show();
+		.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				//httpRequestTask.cancel(true);
 			}
+		});
+		
+		//rajout d'un fragment dans le cas où le layout utilisé correspond
+		// Check that the activity is using the layout version with
+        // the fragment_container FrameLayout
+        if (findViewById(R.id.fragment_container) != null) {
 
-		}
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            // Create a new Fragment to be placed in the activity layout
+            GuadeloupeSectionFragment firstFragment = new GuadeloupeSectionFragment();
+            
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            firstFragment.setArguments(getIntent().getExtras());
+            
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, firstFragment).commit();
+        }		
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.action_rss_gp:
-			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.GP_RSS);
-			startActivity(intent);
-			return true;
-		case R.id.action_rss_mq:
-			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.MQ_RSS);
-			startActivity(intent);
-			return true;
-		case R.id.action_rss_all:
-			intent.putExtra(MainActivity.RSS_TO_OPEN, MainActivity.DEFAULT_RSS);
-			startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	public List<News> getListNews() {
-		return listNews;
-	}
-
-	public void setListNews(List<News> listNews) {
-		this.listNews = listNews;
-	}
-
 }

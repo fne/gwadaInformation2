@@ -27,23 +27,23 @@ public class NewsAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * RÃ©cupÃ©rer un item de la liste en fonction de sa position
+	 * récupérer un item de la liste en fonction de sa position
 	 * 
 	 * @param position
-	 *            - Position de l'item Ã  rÃ©cupÃ©rer
-	 * @return l'item rÃ©cupÃ©rÃ©
+	 *            - Position de l'item à récupérer
+	 * @return l'item récupéré
 	 */
 	public Object getItem(int position) {
 		return listNews.get(position);
 	}
 
 	/**
-	 * RÃ©cupÃ©rer l'identifiant d'un item de la liste en fonction de sa position
-	 * (plutÃ´t utilisÃ© dans le cas d'une base de donnÃ©es, mais on va l'utiliser
+	 * Récupérer l'identifiant d'un item de la liste en fonction de sa position
+	 * (plutôt utilisé dans le cas d'une base de données, mais on va l'utiliser
 	 * aussi)
 	 * 
 	 * @param position
-	 *            - Position de l'item Ã  rÃ©cupÃ©rer
+	 *            - Position de l'item à récupérer
 	 * @return l'identifiant de l'item
 	 */
 	public long getItemId(int position) {
@@ -87,7 +87,7 @@ public class NewsAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * classe contenant les vues procÃ©dÃ© moins couteux en matiere de generation
+	 * classe contenant les vues procédé moins couteux en matiere de generation
 	 * des vues
 	 * 
 	 * @author NEBLAI

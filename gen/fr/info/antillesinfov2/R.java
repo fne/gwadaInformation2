@@ -34,9 +34,9 @@ public final class R {
         public static final int action_settings=0x7f080012;
         public static final int button1=0x7f080003;
         public static final int category=0x7f08000b;
+        public static final int fragment_container=0x7f080004;
         public static final int img=0x7f08000a;
         public static final int img_detail_info=0x7f080001;
-        public static final int listView=0x7f080004;
         public static final int listViewAll=0x7f080007;
         public static final int listViewGuadeloupe=0x7f080008;
         public static final int listViewMartinique=0x7f080009;
