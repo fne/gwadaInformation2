@@ -5,33 +5,45 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
-    
-	<uses-permission android:name="android.permission.INTERNET" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="fr.info.antillesinfov2.MainActivity"
+            android:name="fr.info.antillesinfov2.activity.MainActivity"
+            android:label="@string/app_name"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
+            android:name="fr.info.antillesinfov2.activity.DetailInfoActivity"
+            android:label="@string/title_activity_detail_info"
+            android:parentActivityName="fr.info.antillesinfov2.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.info.antillesinfov2.MainTabActivity" />
+        </activity>
+        <activity
+            android:name="fr.info.antillesinfov2.activity.WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fr.info.antillesinfov2.DetailInfoActivity" />
+        </activity>
+        <activity
+            android:name="fr.info.antillesinfov2.activity.MainTabActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="fr.info.antillesinfov2.DetailInfoActivity"
-            android:label="@string/title_activity_detail_info"
-            android:parentActivityName="fr.info.antillesinfov2.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="fr.info.antillesinfov2.MainActivity" />
         </activity>
     </application>
 

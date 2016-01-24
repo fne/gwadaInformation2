@@ -1,23 +1,19 @@
 package fr.info.antillesinfov2.business.service.android;
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper.RequestPropertiesCallback;
-
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
 import fr.info.antillesinfov2.R;
 import fr.info.antillesinfov2.business.model.News;
-import fr.info.antillesinfov2.business.service.NewsManager;
-import fr.info.antillesinfov2.business.service.NewsManagerImpl;
 
 public class NewsAdapter extends BaseAdapter {
 
@@ -31,23 +27,23 @@ public class NewsAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * RÃ©cupÃ©rer un item de la liste en fonction de sa position
+	 * récupérer un item de la liste en fonction de sa position
 	 * 
 	 * @param position
-	 *            - Position de l'item Ã  rÃ©cupÃ©rer
-	 * @return l'item rÃ©cupÃ©rÃ©
+	 *            - Position de l'item à récupérer
+	 * @return l'item récupéré
 	 */
 	public Object getItem(int position) {
 		return listNews.get(position);
 	}
 
 	/**
-	 * RÃ©cupÃ©rer l'identifiant d'un item de la liste en fonction de sa position
-	 * (plutÃ´t utilisÃ© dans le cas d'une base de donnÃ©es, mais on va l'utiliser
+	 * Récupérer l'identifiant d'un item de la liste en fonction de sa position
+	 * (plutôt utilisé dans le cas d'une base de données, mais on va l'utiliser
 	 * aussi)
 	 * 
 	 * @param position
-	 *            - Position de l'item Ã  rÃ©cupÃ©rer
+	 *            - Position de l'item à récupérer
 	 * @return l'identifiant de l'item
 	 */
 	public long getItemId(int position) {
@@ -77,7 +73,7 @@ public class NewsAdapter extends BaseAdapter {
 		holder.titre.setText(newsItem.getTitle());
 		holder.category.setText(newsItem.getCategory());
 
-		if (holder.image != null) {			
+		if (holder.image != null && newsItem.getImageUrl()!= null) {			
 			UrlImageViewHelper.setUrlDrawable(holder.image,
 					newsItem.getImageUrl());
 		}
@@ -91,7 +87,7 @@ public class NewsAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * classe contenant les vues procÃ©dÃ© moins couteux en matiere de generation
+	 * classe contenant les vues procédé moins couteux en matiere de generation
 	 * des vues
 	 * 
 	 * @author NEBLAI
